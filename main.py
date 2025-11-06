@@ -216,7 +216,7 @@ async def stop_tracking(sid, data):
             tracking_ids_to_remove.append(tracking_id)
     
     for tracking_id in tracking_ids_to_remove:
-        del active_tracking[tracking_id] # Fixed typo here
+        del active_tracking[tracking_id]
     
     print(f"Tracking stopped by officer {connected_officers.get(sid, {}).get('name', 'Unknown')}")
     return {"status": "success"}
