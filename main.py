@@ -113,7 +113,13 @@ async def clear_alerts():
 @app.get("/snippets/{filename}")
 async def get_snippet(filename: str):
     file_path = os.path.join("snippets", filename)
-    if os..path.exists(file_path):
+    #
+    # --- THIS IS THE TYPO FIX ---
+    #
+    if os.path.exists(file_path): # Changed from os..path
+    #
+    # --- END OF TYPO FIX ---
+    #
         return FileResponse(file_path)
     else:
         raise HTTPException(status_code=404, detail="Snippet not found")
@@ -216,7 +222,7 @@ async def stop_tracking(sid, data):
             tracking_ids_to_remove.append(tracking_id)
     
     for tracking_id in tracking_ids_to_remove:
-        del active_tracking[tracking_id]
+        del active.tracking[tracking_id]
     
     print(f"Tracking stopped by officer {connected_officers.get(sid, {}).get('name', 'Unknown')}")
     return {"status": "success"}
