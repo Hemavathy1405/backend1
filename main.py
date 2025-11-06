@@ -113,7 +113,7 @@ async def clear_alerts():
 @app.get("/snippets/{filename}")
 async def get_snippet(filename: str):
     file_path = os.path.join("snippets", filename)
-    if os.path.exists(file_path):
+    if os..path.exists(file_path):
         return FileResponse(file_path)
     else:
         raise HTTPException(status_code=404, detail="Snippet not found")
