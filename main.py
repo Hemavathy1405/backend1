@@ -11,18 +11,31 @@ import socketio
 
 app = FastAPI()
 
-# Add CORS middleware
+# --- THIS IS THE FIX ---
+# We must define the specific websites that can connect.
+origins = [
+    "https://policemonitoring.vercel.app",  # Your police dashboard
+    "https://sossafety-alert-9ijj.vercel.app", # Your mobile app
+    "http://127.0.0.1:5500", # Your local dashboard for testing
+    "http://localhost:5500"  # Your local dashboard for testing
+]
+
+# Add CORS middleware for FastAPI
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,       # <-- FIX 1: Use the specific list
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Create Socket.IO server
-sio = socketio.AsyncServer(cors_allowed_origins="*", async_mode='asgi')
+# --- THIS IS THE SECOND FIX ---
+# We remove 'cors_allowed_origins' from here.
+# We will let the FastAPI middleware handle all CORS.
+sio = socketio.AsyncServer(async_mode='asgi')
 app.mount("/socket.io", socketio.ASGIApp(sio))
+# --- END OF FIX ---
+
 
 # Simulated alerts storage
 camera_alerts: List[Dict[str, Any]] = []
