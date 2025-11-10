@@ -12,7 +12,7 @@ import socketio
 app = FastAPI()
 
 # --- THIS IS THE FIX ---
-# We must define the specific websites that can connect.
+# We define the *exact* websites that are allowed to connect.
 origins = [
     "https://policemonitoring.vercel.app",  # Your police dashboard
     "https://sossafety-alert-9ijj.vercel.app", # Your mobile app
